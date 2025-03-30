@@ -1,6 +1,6 @@
 // This will be your API base URL when you add FastAPI
 // Example: export const API_BASE_URL = 'http://localhost:8000';
-export const API_BASE_URL = '';
+const API_BASE_URL = '';  // Empty for now since backend is not ready
 
 // User registration service
 export const userService = {
@@ -8,17 +8,6 @@ export const userService = {
     register: async (userData) => {
         // Simulating API call
         console.log('Simulated API call to register user:', userData);
-
-        // This is where you'll add the FastAPI endpoint call later
-        // Example with FastAPI:
-        // const response = await fetch(`${API_BASE_URL}/api/users/register`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(userData)
-        // });
-        // return await response.json();
 
         // For now, return a success response
         return {
@@ -30,11 +19,6 @@ export const userService = {
 
     // Get all users
     getUsers: async () => {
-        // This will be replaced with FastAPI endpoint
-        // Example:
-        // const response = await fetch(`${API_BASE_URL}/api/users`);
-        // return await response.json();
-
         // For now, return mock data
         return {
             success: true,
@@ -48,10 +32,6 @@ export const userService = {
 
     // Get user by ID
     getUserById: async (userId) => {
-        // Will be replaced with:
-        // const response = await fetch(`${API_BASE_URL}/api/users/${userId}`);
-        // return await response.json();
-
         return {
             success: true,
             data: {
@@ -66,17 +46,6 @@ export const userService = {
 // Authentication service
 export const authService = {
     login: async (credentials) => {
-        // Will be replaced with FastAPI endpoint
-        // Example:
-        // const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(credentials)
-        // });
-        // return await response.json();
-
         return {
             success: true,
             token: 'mock_token'
@@ -84,12 +53,49 @@ export const authService = {
     },
 
     logout: async () => {
-        // Will be replaced with FastAPI endpoint
-        // const response = await fetch(`${API_BASE_URL}/api/auth/logout`);
-        // return await response.json();
-
         return {
             success: true
         };
+    }
+};
+
+export const uploadCSV = async (file) => {
+    try {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Mock response for now
+        return {
+            status: "success",
+            predictions: {
+                fraud_detected: Math.random() > 0.5,  // Random boolean
+                confidence_score: Math.random() * 0.5 + 0.5,  // Random score between 0.5 and 1.0
+                suspicious_transactions: [
+                    {
+                        transaction_id: "TX" + Math.floor(Math.random() * 1000),
+                        risk_score: Math.random() * 0.5 + 0.5,
+                        reason: "Unusual transaction pattern detected"
+                    }
+                ]
+            }
+        };
+    } catch (error) {
+        console.error('Error uploading CSV:', error);
+        throw error;
+    }
+};
+
+export const checkHealth = async () => {
+    try {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        return {
+            status: "healthy",
+            timestamp: new Date().toISOString()
+        };
+    } catch (error) {
+        console.error('Health check failed:', error);
+        throw error;
     }
 }; 
