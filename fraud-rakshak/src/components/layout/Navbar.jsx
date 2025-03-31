@@ -52,9 +52,17 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <button className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
-            Logout
-          </button>
+          <div className="flex space-x-4">
+            <Link
+              to="/register-user"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
+            >
+              Register New User
+            </Link>
+            <button className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>

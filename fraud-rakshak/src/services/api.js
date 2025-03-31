@@ -62,7 +62,26 @@ export const authService = {
 export const uploadCSV = async (file) => {
     try {
         // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        //? Static CSV uplad
+        //await new Promise(resolve => setTimeout(resolve, 1500));
+
+        //? Communication with MongoDB
+        const formData = new FormData();
+    formData.append("file", file);
+     await new Promise((resolve) => setTimeout(resolve, 5000));
+
+
+    // const response = await axios.post(
+    //   "http://localhost:8000/api/upload",
+    //   formData,
+    //   {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   }
+    // );
+    // console.log(response);
+    // const data = response.data;
 
         // Mock response for now
         return {

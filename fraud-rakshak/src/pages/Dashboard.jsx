@@ -9,14 +9,85 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   const alerts = [
-    { id: "07.0110", timestamp: "1:22:00", type: "Activity Log" },
-    { id: "07.0033", timestamp: "1:02:00", type: "Activity Log" },
-    { id: "07.0012", timestamp: "1:02:30", type: "Activity Log" },
+    {
+      id: "ALERT-2024-001",
+      timestamp: "2:30 PM",
+      type: "Suspicious Transaction",
+      description: "Multiple high-value transactions from new device",
+      severity: "High",
+    },
+    {
+      id: "ALERT-2024-002",
+      timestamp: "1:45 PM",
+      type: "Location Anomaly",
+      description: "Transaction from new location with high risk score",
+      severity: "Medium",
+    },
+    {
+      id: "ALERT-2024-003",
+      timestamp: "12:15 PM",
+      type: "Device Change",
+      description: "Account accessed from multiple devices in short time",
+      severity: "Medium",
+    },
   ];
 
   const metrics = [
-    { title: "Aotpismet", start: "3.7.02", end: "5.1.81" },
-    { title: "Aostk", start: "60.32", end: "34.718" },
+    {
+      title: "Total Transactions",
+      start: "1,234",
+      end: "1,567",
+      change: "+27%",
+      trend: "up",
+    },
+    {
+      title: "Fraud Detection Rate",
+      start: "98.5%",
+      end: "99.2%",
+      change: "+0.7%",
+      trend: "up",
+    },
+    {
+      title: "Average Response Time",
+      start: "2.3s",
+      end: "1.8s",
+      change: "-21.7%",
+      trend: "down",
+    },
+    {
+      title: "Active Alerts",
+      start: "12",
+      end: "8",
+      change: "-33.3%",
+      trend: "down",
+    },
+  ];
+
+  const systemHealth = [
+    {
+      name: "Transaction Monitoring",
+      status: "Active",
+      uptime: "99.99%",
+      lastCheck: "2 minutes ago",
+    },
+    {
+      name: "ML Model Performance",
+      status: "Active",
+      accuracy: "99.2%",
+      lastCheck: "5 minutes ago",
+    },
+    {
+      name: "Database Health",
+      status: "Active",
+      connections: "245",
+      lastCheck: "1 minute ago",
+    },
+    {
+      name: "API Gateway",
+      status: "Active",
+      requests: "1.2k/min",
+      lastCheck: "30 seconds ago",
+    },
   ];
 
   const handleFileSelect = (event) => {
@@ -71,7 +142,7 @@ const Dashboard = () => {
       </div>
 
       {/* CSV Upload Section */}
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="bg-white p-6 rounded-lg shadow">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-800">
             Import Transaction Data
@@ -210,34 +281,67 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Alert Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {alerts.map((alert) => (
-          <div key={alert.id} className="bg-white p-6 rounded-lg shadow">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-500">{alert.timestamp}</span>
-              <button className="text-gray-400 hover:text-gray-600">♡</button>
+      {/* Metrics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {metrics.map((metric) => (
+          <div key={metric.title} className="bg-white p-6 rounded-lg shadow">
+            <h3 className="font-medium text-gray-700">{metric.title}</h3>
+            <div className="mt-4">
+              <div className="flex justify-between items-end">
+                <div>
+                  <span className="text-sm text-gray-500">Current</span>
+                  <p className="text-2xl font-semibold mt-1">{metric.end}</p>
+                </div>
+                <div
+                  className={`text-sm ${
+                    metric.trend === "up" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {metric.change}
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mt-2">{alert.id}</h3>
-            <p className="text-gray-600">{alert.type}</p>
           </div>
         ))}
       </div>
 
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {metrics.map((metric) => (
-          <div key={metric.title} className="bg-white p-4 rounded-lg shadow">
-            <h3 className="font-medium text-gray-700">{metric.title}</h3>
-            <div className="flex justify-between items-center mt-2">
+      {/* Alert Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {alerts.map((alert) => (
+          <div key={alert.id} className="bg-white p-6 rounded-lg shadow">
+            <div className="flex justify-between items-start">
               <div>
-                <span className="text-sm text-gray-500">Start</span>
-                <p className="text-lg font-semibold">{metric.start}</p>
+                <span className="text-sm text-gray-500">{alert.timestamp}</span>
+                <h3 className="text-lg font-semibold mt-1">{alert.id}</h3>
+                <p className="text-gray-600 mt-1">{alert.type}</p>
+                <p className="text-sm text-gray-500 mt-2">
+                  {alert.description}
+                </p>
+                <span
+                  className={`inline-block px-2 py-1 text-xs font-medium rounded-full mt-2 ${
+                    alert.severity === "High"
+                      ? "bg-red-100 text-red-800"
+                      : "bg-yellow-100 text-yellow-800"
+                  }`}
+                >
+                  {alert.severity} Priority
+                </span>
               </div>
-              <div>
-                <span className="text-sm text-gray-500">End</span>
-                <p className="text-lg font-semibold">{metric.end}</p>
-              </div>
+              <button className="text-gray-400 hover:text-gray-600">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         ))}
@@ -247,24 +351,41 @@ const Dashboard = () => {
       <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">System Health</h2>
         <div className="space-y-4">
-          {[
-            "Uscolr Management",
-            "Wlcen Health",
-            "Ustoar Yeal",
-            "System Management",
-          ].map((item) => (
+          {systemHealth.map((item) => (
             <div
-              key={item}
-              className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg"
+              key={item.name}
+              className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg"
             >
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+              <div className="flex items-center space-x-4">
+                <div
+                  className={`w-3 h-3 rounded-full ${
+                    item.status === "Active" ? "bg-green-500" : "bg-red-500"
+                  }`}
+                ></div>
                 <div>
-                  <h3 className="font-medium">{item}</h3>
-                  <p className="text-sm text-gray-500">System Status</p>
+                  <h3 className="font-medium text-gray-900">{item.name}</h3>
+                  <p className="text-sm text-gray-500">
+                    Last checked: {item.lastCheck}
+                  </p>
                 </div>
               </div>
-              <span className="text-gray-500">Active</span>
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-900">
+                  {item.uptime ||
+                    item.accuracy ||
+                    item.connections ||
+                    item.requests}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {item.uptime
+                    ? "Uptime"
+                    : item.accuracy
+                    ? "Accuracy"
+                    : item.connections
+                    ? "Active Connections"
+                    : "Requests/Min"}
+                </p>
+              </div>
             </div>
           ))}
         </div>
